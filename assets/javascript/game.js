@@ -1,5 +1,6 @@
 var gameElem = document.getElementById('game');
 var playing = false;
+var finished = false;
 var gameReady = true;
 var messageHTML = '';
 
@@ -7,7 +8,7 @@ var wins = 0;
 var strikesRemaining = 3;
 var lettersGuessed = [];
 
-var words = ['madonna', 'katyperry'];
+var words = ['Madonna', 'KatyPerry'];
 var index = 0;
 
 function runGame(keyPressed){
@@ -16,7 +17,7 @@ function runGame(keyPressed){
         console.log('start playing')
     } else if (isValidKey(keyPressed)){
         lettersGuessed.push(keyPressed);
-        if(keyInWord(keyPressed,words[index])){
+        if(!keyInWord(keyPressed,words[index])){
             strikesRemaining -= 1;
         }
         if(strikesRemaining === 0){
@@ -36,7 +37,9 @@ function isValidKey(key){
     return /^[a-z0-9]$/i.test(key);
 }
 function keyInWord(key, word){
-    return word.indexOf(key) === -1;
+    var lowerCaseWord = word.toLowerCase();
+    var lowerCaseLetter = key.toLowerCase();
+    return lowerCaseWord.indexOf(lowerCaseLetter) !== -1;
 }
 function guessedAllBool(word, letters){
     return createBlanksString(word, letters) ===
@@ -64,7 +67,9 @@ function nextWord(){
     } else {
         console.log('finished')
         messageHTML = "You have finished all of the words"
-        document.write(messageHTML)
+        finished = true;
+        gameElem.innerHTML += messageHTML;
+        //document.write(messageHTML)
     }
 }
 function putResultsOnScreen(){
@@ -88,7 +93,8 @@ function putResultsOnScreen(){
 function createBlanksString(word, lettersGuessed){
     var resultString = '';
     for(var i=0;i<word.length;i++){
-        if(lettersGuessed.indexOf(word[i]) !== -1){
+        if(keyInWord(word[i], lettersGuessed.join(""))){
+        //if(lettersGuessed.indexOf(word[i]) !== -1){
             // if letter is in lettersGuessed
             resultString += word[i]+" ";
         } else {
@@ -99,4 +105,9 @@ function createBlanksString(word, lettersGuessed){
 }
 
 
-document.onkeydown = runGame(evt.key);
+document.onkeydown = function(evt){
+    if(!finished){
+        runGame(evt.key);
+    }
+    
+}
