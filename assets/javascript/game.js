@@ -8,7 +8,7 @@ var wins = 0;
 var strikesRemaining = 3;
 var lettersGuessed = [];
 
-var words = ['Madonna', 'KatyPerry'];
+var words = ['Katy Perry', 'Madonna', 'Snoop'];
 var index = 0;
 
 function runGame(keyPressed){
@@ -23,7 +23,7 @@ function runGame(keyPressed){
         if(strikesRemaining === 0){
             lose();
         }
-        if(guessedAllBool(words[index],lettersGuessed)){
+        if(guessedAllBool(words[index], lettersGuessed)){
             win();
         }
     }
@@ -42,8 +42,20 @@ function keyInWord(key, word){
     return lowerCaseWord.indexOf(lowerCaseLetter) !== -1;
 }
 function guessedAllBool(word, letters){
-    return createBlanksString(word, letters) ===
-        word.split('').join(' ')+" ";
+    //return createBlanksString(word, letters) ===
+    //    word.split('').join(' ')+" ";
+    
+    for(var i=0;i<word.length;i++){
+        if (!( letters.indexOf(word[i].toUpperCase()) !== -1 ||
+            letters.indexOf(word[i].toLowerCase()) !== -1
+        )){
+            if( word[i] !== " "){
+                //console.log("doesn't contain " + word[i])
+                return false;
+            }
+        }
+    }
+    return true;
 }
 function lose(){
     console.log('lose');
@@ -97,6 +109,8 @@ function createBlanksString(word, lettersGuessed){
         //if(lettersGuessed.indexOf(word[i]) !== -1){
             // if letter is in lettersGuessed
             resultString += word[i]+" ";
+        } else if(word[i]===" "){
+            resultString += "&nbsp;&nbsp;&nbsp;";
         } else {
             resultString += "_ ";
         }
