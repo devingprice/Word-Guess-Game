@@ -1,8 +1,109 @@
 @import url('https://fonts.googleapis.com/css?family=News+Cycle:700');
 
 * { box-sizing: border-box; }
+html,body {
+    padding:0;
+    margin:0;
+    height:100%;
+}
+body {
+    display:flex;
+    flex-direction:column;
+}
+header {
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    justify-content: center;
+    align-items:center;
+    width:100%;
+    background-color:#e4c899;
+}
+.header-word {
+    display:flex;
+    flex-direction: row;
+    margin: 1vmin;
+}
+.tile--header {
+    margin: .5vmin;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    font-size: 3.5vmin;
+    line-height: 1.45;
+    width: 6vmin;
+    height: 6vmin;
+}
+
+#game{
+    flex-grow:1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.game-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.words-container, .image-container {
+    width:50%;
+}
+.image-container {
+    padding:10px;
+    position:relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.screenshot-img {
+    width:100%;
+}
+#startMessage {
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+}
+.message-container {
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content: center;
+
+    position: absolute;
+    width:70%;
+    height:70%;
+
+    background-color: white;
+}
+
+.stats-container {
+    display:flex;
+    flex-direction: row;
+    padding: 0 20px;
+}
+.strikes-container, .guessed-container, .wins-container {
+    width:33.3%;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.solution-container {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
 
 .tile-container {
+    max-width: 100%;
     display: flex;
     flex-direction: row;
     margin: 10px;
@@ -63,4 +164,13 @@
     height: 5vmin;
     font-size: 3vmin;
     line-height: 1.45;
+}
+@media screen and (max-width:900px){
+    .game-container {
+        flex-direction: column;
+        height:100%;
+    }
+    .words-container, .image-container {
+        width:100%;
+    }
 }
