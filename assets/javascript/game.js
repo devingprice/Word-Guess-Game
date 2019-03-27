@@ -99,6 +99,7 @@ function putResultsOnScreen(){
         strikesString +
         guessedString +
         blanksString +
+        createTileGroup(words[index], lettersGuessed) +
         messageHTML
     );
 }
@@ -117,7 +118,33 @@ function createBlanksString(word, lettersGuessed){
     }
     return resultString;
 }
+function createTileGroup(word, lettersGuessed){
+    var resultHTML = '<div>';
+    var individualWords = word.split(' ');
+    console.log(individualWords)
+    for(var i=0; i<individualWords.length; i++){
+        var wordContainer = "<div class='tile-container'>";
+        
+        for(var j=0; j<individualWords[i].length; j++){
 
+            if(keyInWord(individualWords[i][j], lettersGuessed.join(""))){
+                wordContainer += "<div class='wooden tile'>" + individualWords[i][j] + "</div>";
+            } else if(word[i]===" "){ //shouldnt reach this after splitting, dead code
+                wordContainer += "<div class='wooden tile'>" + " " + "</div>";
+            } else {
+                wordContainer += "<div class='empty tile'>"  + "</div>";
+            }
+
+            //wordContainer += "<div class='tile'>" + individualWords[i][j] + "</div>";
+        }
+
+        wordContainer += "</div>"
+        console.log(wordContainer)
+        resultHTML += wordContainer;
+    }
+    resultHTML += "</div>"
+    return resultHTML;
+}
 
 document.onkeydown = function(evt){
     if(!finished){
