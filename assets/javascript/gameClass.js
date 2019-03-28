@@ -10,14 +10,10 @@ class ScreenCapQuiz {
         this.lettersGuessed = [];
 
         this.index = 0;
-        //this.words = words; /*
-        this.words = words.map( movieObj => {
-            return movieObj.title;
-        });
-        this.images = words.map( movieObj => {
-            return movieObj.image;
-        });
-
+        this.data = words;
+        this.title = this.data[this.index].title;
+        this.image = this.data[this.index].image;
+       
         this.messageHTML = '';
     }
 
@@ -30,19 +26,17 @@ class ScreenCapQuiz {
             if(this.lettersGuessed.indexOf(keyPressed) === -1){
                 this.lettersGuessed.push(keyPressed);
             }
-
-            if(!this.keyInWord(keyPressed, this.words[this.index])){
+            if(!this.keyInWord(keyPressed, this.title)){
                 this.strikesRemaining -= 1;
             }
             if(this.strikesRemaining === 0){
                 this.lose();
             }
-
-            if(this.guessedAllBool(this.words[this.index], this.lettersGuessed)){
+            if(this.guessedAllBool(this.title, this.lettersGuessed)){
                 this.win();
             }
         }
-        //this.putResultsOnScreen();
+        
         this.putResultsInPlaces();
         if(this.gameReady){
             this.reset();
@@ -73,7 +67,7 @@ class ScreenCapQuiz {
     lose(){
         console.log('lose');
         this.gameReady = true;
-        this.messageHTML = "<div>You lost!</div><div> Answer was: "+this.words[this.index]+"</div><div>Press Any Key to Continue</div>";
+        this.messageHTML = "<div>You lost!</div><div> Answer was: "+this.title+"</div><div>Press Any Key to Continue</div>";
     }
     win(){
         console.log('win');
@@ -87,12 +81,14 @@ class ScreenCapQuiz {
         this.messageHTML = '';
     }
     nextWord(){
-        if(this.index < this.words.length -1){
+        if(this.index < this.data.length -1){
             this.index++
+            this.title = this.data[this.index].title;
+            this.image = this.data[this.index].image;
         } else {
             console.log('finished')
             this.finished = true;
-            //this.gameElem.innerHTML += this.messageHTML;
+            
             var messageContainer = document.getElementById('message-container');
             messageContainer.innerHTML = messageContainer.innerHTML.replace(
                 "Press Any Key to Continue",
@@ -124,27 +120,26 @@ class ScreenCapQuiz {
     putResultsInPlaces(){
         if(this.messageHTML !== ''){
             document.getElementById('image-container').innerHTML = (
-                "<img class='screenshot-img' src='"+ this.images[this.index] + "'>" +
+                "<img class='screenshot-img' src='"+ this.image + "'>" +
                 "<div class='message-container' id='message-container'>"+ this.messageHTML + "</div>"
             )
         } else {
             document.getElementById('image-container').innerHTML = (
-                "<img class='screenshot-img' src='"+ this.images[this.index] + "'>"
+                "<img class='screenshot-img' src='"+ this.image + "'>"
             )
         }
         document.getElementById('strikesNum').innerText = this.strikesRemaining;
         
         var incorrectLetters = '';
         for(var i=0; i<this.lettersGuessed.length; i++){
-            if(!this.keyInWord(this.lettersGuessed[i], this.words[this.index])){
+            if(!this.keyInWord(this.lettersGuessed[i], this.title)){
                 incorrectLetters += "<div class='faded tile tile--small'>" + this.lettersGuessed[i] + "</div>";
             }
         }
         
         document.getElementById('guessedWords').innerHTML = incorrectLetters;
         document.getElementById('winsNum').innerText = this.wins;
-
-        document.getElementById('solution-container').innerHTML = this.createSolutionHTML(this.words[this.index],this.lettersGuessed);
+        document.getElementById('solution-container').innerHTML = this.createSolutionHTML(this.title,this.lettersGuessed);
     }
 }
 
@@ -185,86 +180,3 @@ document.onkeydown = function(evt){
     }
     
 }
-
-/*
-
-
-    putResultsOnScreen(){
-        var wordsContainer =
-        "<div class='words-container'>" +
-            "<div class='stats-container'>" +
-            this.createStrikesHTML(this.strikesRemaining) +
-            this.createLettersGuessedHTML(this.lettersGuessed) +
-            this.createWinsHTML(this.wins) +
-            "</div>" +
-            //this.createBlanksHTML(this.words[this.index], this.lettersGuessed) +
-            this.createTileGroupHTML(this.words[this.index], this.lettersGuessed) +
-            //this.messageHTML +
-        "</div>";
-
-        var messageContainer = this.createMessageHTML(this.messageHTML);
-
-        var imageContainer = "<div class='image-container'>"+
-        "<img class='screenshot-img' src='"+ this.images[this.index] + "'>" + 
-        messageContainer +
-        "</div>"
-
-        gameElem.innerHTML = "<div class='game-container'>"+ imageContainer + wordsContainer  + "</div>";
-    }
-    createMessageHTML(message){
-        if(message !== ''){
-            return "<div class='message-container'>"+
-            message + "</div>";
-        } else {
-            return ""
-        }
-    }
-    createWinsHTML(wins){
-        return "<div class='wins-container'>" + 
-            "<div class='wins--header'>Wins:</div> " +
-            "<div class='winsNum'>" + wins + "</div>" +
-        "</div>";
-    }
-    createStrikesHTML(strikeNum){
-        return "<div class='strikes-container'>" + 
-            "<div class='stikes--header'>Guesses Remaining:</div> " +
-            "<div class='strikesNum'>" + strikeNum + "</div>" +
-        "</div>";
-    }
-    createLettersGuessedHTML(lettersArray){
-        var resultHTML = "<div class='guessed-container'>"+
-        "<div class='guessed--header'>Incorrect Guesses </div> " +
-        "<div class='tile-container'>";
-        for(var i=0; i<lettersArray.length; i++){
-
-            // only display incorrect guesses
-            if(!this.keyInWord(lettersArray[i], this.words[this.index])){
-                resultHTML += "<div class='faded tile tile--small'>" + lettersArray[i] + "</div>";
-            }
-
-        }
-        resultHTML += "</div></div>"
-        return resultHTML;
-    }
-    createTileGroupHTML(word, lettersGuessed){
-        var resultHTML = "<div class='solution-container'>";
-        var individualWords = word.split(' ');
-        for(var i=0; i<individualWords.length; i++){
-            var wordContainer = "<div class='tile-container'>";
-            
-            for(var j=0; j<individualWords[i].length; j++){
-                
-                if(this.keyInWord(individualWords[i][j], lettersGuessed.join(""))){
-                    wordContainer += "<div class='wooden tile'>" + individualWords[i][j] + "</div>";
-                } else {
-                    wordContainer += "<div class='empty tile'>"  + "</div>";
-                }
-            }
-    
-            wordContainer += "</div>"
-            resultHTML += wordContainer;
-        }
-        resultHTML += "</div>"
-        return resultHTML;
-    }
-*/
