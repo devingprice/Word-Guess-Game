@@ -36,6 +36,7 @@ header {
 }
 
 #game{
+    max-width: 1024px;
     flex-grow:1;
     display: flex;
     justify-content: center;

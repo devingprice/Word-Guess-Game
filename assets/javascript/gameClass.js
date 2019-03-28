@@ -32,7 +32,7 @@ class ScreenCapQuiz {
             if(this.strikesRemaining === 0){
                 this.lose();
             }
-            if(this.guessedAllBool(this.title, this.lettersGuessed)){
+            if(this.guessedAll(this.title, this.lettersGuessed)){
                 this.win();
             }
         }
@@ -45,14 +45,14 @@ class ScreenCapQuiz {
     }
     
     isValidKey(key){
-        return /^[a-z0-9]$/i.test(key);
+        return /^[a-zA-Z0-9]$/i.test(key); //from https://forums.asp.net/t/1289763.aspx?Regular+Expression+Validator+Letters+and+Numbers+only+
     }
     keyInWord(key, word){
         var lowerCaseWord = word.toLowerCase();
         var lowerCaseLetter = key.toLowerCase();
         return lowerCaseWord.indexOf(lowerCaseLetter) !== -1;
     }
-    guessedAllBool(word, letters){
+    guessedAll(word, letters){
         for(var i=0;i<word.length;i++){
             if (!( letters.indexOf(word[i].toUpperCase()) !== -1 ||
                 letters.indexOf(word[i].toLowerCase()) !== -1
