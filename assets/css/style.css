@@ -48,6 +48,24 @@ header {
     flex-direction: row;
     align-items: center;
 }
+/*
+May try to set image-container to max-height:50%;
+Then it will scale up to whatever width it needs
+if width > 50% then words container will get wrapped down
+    to the row below it
+
+so if super tall image
+    it will be 50vh <50vw image and 50vw words-container on same row
+if wide image
+    it will be 50vh >50vw image and words-container will be wrapped to line below
+    would have to overflow-x hidden (with centered) to make sure page stays right width
+
+Or I could have bootstrap container with a set width at each media query size
+    image has max-height:50% and max-width:50% while centered (set this on container and overflow hidden)
+    words container has same
+    so it is always a column but has margins
+    my images are all pretty small so I dont think i need to try and make it look nice on big screens anyways
+*/
 .words-container, .image-container {
     width:50%;
 }
@@ -153,7 +171,7 @@ header {
 
 .tile {
     margin: 10px;
-    display: flex;;
+    display: flex;
     justify-content: center;
     margin: 1vmin;
     width: 10vmin;
@@ -166,6 +184,14 @@ header {
     font-size: 3vmin;
     line-height: 1.45;
 }
+
+
+/*
+tile has to be square so i need to set width/height
+will change with media queuries
+need to set appropriate font size with tile size
+
+*/
 @media screen and (max-width:900px){
     .game-container {
         flex-direction: column;
