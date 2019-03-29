@@ -1,154 +1,174 @@
-var gameElem = document.getElementById('game');
-var playing = false;
-var finished = false;
-var gameReady = true;
-var messageHTML = '';
-
-var wins = 0;
-var strikesRemaining = 3;
-var lettersGuessed = [];
-
-var words = ['Katy Perry', 'Madonna', 'Snoop'];
-var index = 0;
-
-function runGame(keyPressed){
-    if(gameReady){
-        gameReady=false;
-        console.log('start playing')
-    } else if (isValidKey(keyPressed)){
-        lettersGuessed.push(keyPressed);
-        if(!keyInWord(keyPressed,words[index])){
-            strikesRemaining -= 1;
-        }
-        if(strikesRemaining === 0){
-            lose();
-        }
-        if(guessedAllBool(words[index], lettersGuessed)){
-            win();
-        }
-    }
-    putResultsOnScreen();
-    if(gameReady){
-        reset();
-        nextWord();
-    }
-}
 function isValidKey(key){
-    return /^[a-z0-9]$/i.test(key);
+    return /^[a-zA-Z0-9]$/i.test(key); //from https://forums.asp.net/t/1289763.aspx?Regular+Expression+Validator+Letters+and+Numbers+only+
 }
 function keyInWord(key, word){
     var lowerCaseWord = word.toLowerCase();
     var lowerCaseLetter = key.toLowerCase();
     return lowerCaseWord.indexOf(lowerCaseLetter) !== -1;
 }
-function guessedAllBool(word, letters){
-    //return createBlanksString(word, letters) ===
-    //    word.split('').join(' ')+" ";
-    
+function guessedAll(word, letters){
     for(var i=0;i<word.length;i++){
         if (!( letters.indexOf(word[i].toUpperCase()) !== -1 ||
             letters.indexOf(word[i].toLowerCase()) !== -1
         )){
             if( word[i] !== " "){
-                //console.log("doesn't contain " + word[i])
                 return false;
             }
         }
     }
     return true;
 }
-function lose(){
-    console.log('lose');
-    gameReady = true;//playing = false;
-    messageHTML = "<div>"+words[index]+"</div><div>You lost!</div><div>Press Any Key to Continue</div>";
-}
-function win(){
-    console.log('win');
-    gameReady = true; //playing = false;
-    wins++;
-    messageHTML = "<div>You Won!</div><div>Press Any Key to Continue</div>";
-}
-function reset(){
-    strikesRemaining = 3;
-    lettersGuessed = [];
-    messageHTML = '';
-}
-function nextWord(){
-    if(index < words.length -1){
-        index++
-    } else {
-        console.log('finished')
-        messageHTML = "You have finished all of the words"
-        finished = true;
-        gameElem.innerHTML += messageHTML;
-        //document.write(messageHTML)
+var audioPlayer = {
+    right: function (){
+        document.getElementById('audio-right').play();
+    },
+    wrong: function (){
+        document.getElementById('audio-wrong').play();
+    },
+    victory: function(){
+        document.getElementById('audio-win').play();
     }
 }
-function putResultsOnScreen(){
-    var strikesString = "<div>Number of Guesses remaining: " 
-        + strikesRemaining + 
-        "</div>";
-    var guessedString = "<div>Letters Guessed: " + 
-        lettersGuessed.join(', ') +
-        "</div>";
-    var blanksString = "<div>"+
-        createBlanksString(words[index], lettersGuessed) +
-        "</div>";
 
-    gameElem.innerHTML=(
-        strikesString +
-        guessedString +
-        blanksString +
-        createTileGroup(words[index], lettersGuessed) +
-        messageHTML
-    );
-}
-function createBlanksString(word, lettersGuessed){
-    var resultString = '';
-    for(var i=0;i<word.length;i++){
-        if(keyInWord(word[i], lettersGuessed.join(""))){
-        //if(lettersGuessed.indexOf(word[i]) !== -1){
-            // if letter is in lettersGuessed
-            resultString += word[i]+" ";
-        } else if(word[i]===" "){
-            resultString += "&nbsp;&nbsp;&nbsp;";
-        } else {
-            resultString += "_ ";
-        }
-    }
-    return resultString;
-}
-function createTileGroup(word, lettersGuessed){
-    var resultHTML = '<div>';
-    var individualWords = word.split(' ');
-    console.log(individualWords)
-    for(var i=0; i<individualWords.length; i++){
-        var wordContainer = "<div class='tile-container'>";
-        
-        for(var j=0; j<individualWords[i].length; j++){
+var quizObject = {
+    finished : false,
+    gameReady : true,
+    wins : 0,
+    strikesRemaining : 3,
+    lettersGuessed : [],
+    index : 0,
+    data : sources,
+    title : sources[0].title,//just initializing  this.data[this.index].title,
+    image : sources[0].image,//just initializing  this.data[this.index].image,
+    messageHTML : '',
+    runGame : function(keyPressed){
+        if(this.gameReady){ // stop game until keypress at start or in between rounds
+            this.gameReady=false;
+            console.log('start playing')
+        } else if (isValidKey(keyPressed)){ //if key is letter or num
 
-            if(keyInWord(individualWords[i][j], lettersGuessed.join(""))){
-                wordContainer += "<div class='wooden tile'>" + individualWords[i][j] + "</div>";
-            } else if(word[i]===" "){ //shouldnt reach this after splitting, dead code
-                wordContainer += "<div class='wooden tile'>" + " " + "</div>";
-            } else {
-                wordContainer += "<div class='empty tile'>"  + "</div>";
+            if(this.lettersGuessed.indexOf(keyPressed) === -1){ // if you havent already typed this
+                this.lettersGuessed.push(keyPressed);  
+                console.log(this.lettersGuessed)
+            } else { //if new letter
+                if(!keyInWord(keyPressed, this.title)){ //if not in title
+                    console.log("keypressed:",keyPressed, this.title)
+                    console.log(keyInWord(keyPressed, this.title))
+                    this.strikesRemaining -= 1;
+                    audioPlayer.wrong();
+                } else {
+                    audioPlayer.right();
+                }
             }
-
-            //wordContainer += "<div class='tile'>" + individualWords[i][j] + "</div>";
+            
+            // win lose conditions
+            if(this.strikesRemaining === 0){
+                this.lose();
+            } else if(guessedAll(this.title, this.lettersGuessed)){
+                this.win();
+                audioPlayer.victory();
+            }
         }
-
-        wordContainer += "</div>"
-        console.log(wordContainer)
-        resultHTML += wordContainer;
+        
+        this.putResultsInPlaces(); //display
+        //next round
+        if(this.gameReady){
+            this.reset();
+            this.nextWord();
+        }   
+    },
+    lose : function(){
+        console.log('lose');
+        this.gameReady = true;
+        this.messageHTML = "<div>You lost!</div><div> Answer was: "+this.title+"</div><div>Press Any Key to Continue</div>";
+    },
+    win : function(){
+        console.log('win');
+        this.gameReady = true; 
+        this.wins++;
+        this.messageHTML = "<div>You Won!</div><div>Press Any Key to Continue</div>";
+    },
+    reset : function(){
+        this.strikesRemaining = 3;
+        this.lettersGuessed = [];
+        this.messageHTML = '';
+    },
+    nextWord : function(){
+        if(this.index < this.data.length -1){
+            this.index++
+            this.title = this.data[this.index].title;
+            this.image = this.data[this.index].image;
+        } else {
+            console.log('finished')
+            this.finished = true;
+            
+            var messageContainer = document.getElementById('message-container');
+            messageContainer.innerHTML = messageContainer.innerHTML.replace(
+                "Press Any Key to Continue",
+                "You have finished all of the words"
+            )
+        }
+    },
+    createSolutionHTML : function(){
+        var resultHTML = "";
+        var individualWords = this.title.split(' ');
+        for(var i=0; i<individualWords.length; i++){
+            var wordContainer = "<div class='tile-container'>";
+            
+            for(var j=0; j<individualWords[i].length; j++){
+                
+                if(keyInWord(individualWords[i][j], this.lettersGuessed.join(""))){
+                    wordContainer += "<div class='wooden tile'>" + individualWords[i][j] + "</div>";
+                } else {
+                    wordContainer += "<div class='empty tile'>"  + "</div>";
+                }
+            }
+    
+            wordContainer += "</div>"
+            resultHTML += wordContainer;
+        }
+        return resultHTML;
+    },
+    putResultsInPlaces : function(){
+        if(this.messageHTML !== ''){
+            document.getElementById('image-container').innerHTML = (
+                "<img class='screenshot-img' src='"+ this.image + "'>" +
+                "<div class='message-container' id='message-container'><div class='frame message-frame'><div class='frame-inside message-inside'>"+ 
+                this.messageHTML + 
+                "</div></div></div>"
+            )
+        } else {
+            document.getElementById('image-container').innerHTML = (
+                "<img class='screenshot-img' src='"+ this.image + "'>"
+            )
+        }
+        document.getElementById('strikesNum').innerText = this.strikesRemaining;
+        
+        var incorrectLetters = '';
+        for(var i=0; i<this.lettersGuessed.length; i++){
+            if(!keyInWord(this.lettersGuessed[i], this.title)){
+                incorrectLetters += "<div class='tile '>" + this.lettersGuessed[i] + "</div>";
+            }
+        }
+        
+        document.getElementById('guessedWords').innerHTML = incorrectLetters;
+        document.getElementById('winsNum').innerText = this.wins;
+        document.getElementById('solution-container').innerHTML = this.createSolutionHTML(this.title,this.lettersGuessed);
     }
-    resultHTML += "</div>"
-    return resultHTML;
 }
+
+
+var game = quizObject; 
 
 document.onkeydown = function(evt){
-    if(!finished){
-        runGame(evt.key);
+    //runs every click but just resets this value over and over
+    document.getElementById('startMessage').setAttribute("style", "display:none");
+    document.getElementById('frame-container').setAttribute("style", "display:flex"); 
+    
+    if(!game.finished){
+        game.runGame(evt.key);
     }
     
 }
+
+console.log('loaded js')
