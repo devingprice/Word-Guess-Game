@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Neoneon';
+  src: url('Neoneon.eot');
+  src: url('Neoneon.eot?#iefix') format('embedded-opentype'),
+       url('Neoneon.svg#Neoneon') format('svg'),
+       url('Neoneon.ttf') format('truetype'),
+       url('Neoneon.woff') format('woff'),
+       url('Neoneon.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+

@@ -1,7 +1,15 @@
-#startMessage {
-	background-color: black;
+@font-face {
+    font-family: Neoneon;
+	src: url("../fonts/Neoneon.eot"); /* IE9 Compat Modes */
+	src: url("../fonts/Neoneon.otf") format("otf"),
+		 url("../fonts/Neoneon.woff") format("woff"), /* Modern Browsers */
+         url("../fonts/Neoneon.ttf")  format("truetype"), /* Safari, Android, iOS */
+         url("../fonts/Neoneon.svg#Neoneon") format("svg"); /* Legacy iOS */
 }
+/* Says free with attribution from https://www.behance.net/gallery/55332529/NEONEON-FREE-FONT */
 
+
+/* Theater css was found https://codepen.io/tiffwong/pen/ErGgxq*/
 .theater-sign {
 	height: 300px;
 	margin: 175px auto;
@@ -11,21 +19,10 @@
 	display: flex;
 	justify-content: space-between;
 }
-.sign-lines {
-	flex: 0 1 30%;
-	margin-top: 10px;
-}
-.sign-line {
-	background: white;
-	border-radius: 3px;
-	box-shadow: 0 0 10px #fff, 0 0 20px #07294D, 0 0 35px #07294D, 0 0 40px #07294D;
-	height: 6px;
-	margin-top: 16px;
-}
 .sign-title {
 	color: #FFF4CD;
 	flex: 0 1 40%;
-	font-family: 'Fredoka One', cursive;
+	font-family: 'Neoneon', 'Orbitron', sans-serif;
 	font-size: 60px;
 	letter-spacing: 10px;
 	margin: 6px auto;
@@ -176,5 +173,16 @@
 	}
 	to {
 		opacity: 1;
+	}
+}
+
+.nowShowing{
+	position: absolute;
+	bottom: 100%;
+	padding-left:30px;
+}
+@media screen and (max-width:980px){
+	.nowShowing{
+		padding-left:0;
 	}
 }

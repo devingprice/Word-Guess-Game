@@ -9,6 +9,8 @@ html,body {
 body {
     display:flex;
     flex-direction:column;
+
+    background-color:#10100f;
 }
 header {
     display:flex;
@@ -36,6 +38,8 @@ header {
 }
 
 #game{
+    margin: 0 auto;
+    min-width: 734px;
     max-width: 1024px;
     flex-grow:1;
     display: flex;
@@ -43,34 +47,22 @@ header {
     align-items: center;
     position: relative;
 }
-.game-container {
+#game-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
+    justify-content: space-around;
+    height:100%;
+    width:100%;
+    background-color: black;
+    background-image: linear-gradient(to bottom, #4e4343, #17110d);
 }
-/*
-May try to set image-container to max-height:50%;
-Then it will scale up to whatever width it needs
-if width > 50% then words container will get wrapped down
-    to the row below it
 
-so if super tall image
-    it will be 50vh <50vw image and 50vw words-container on same row
-if wide image
-    it will be 50vh >50vw image and words-container will be wrapped to line below
-    would have to overflow-x hidden (with centered) to make sure page stays right width
-
-Or I could have bootstrap container with a set width at each media query size
-    image has max-height:50% and max-width:50% while centered (set this on container and overflow hidden)
-    words container has same
-    so it is always a column but has margins
-    my images are all pretty small so I dont think i need to try and make it look nice on big screens anyways
-*/
-.words-container, .image-container {
-    width:50%;
+#words-container {
+    width:100%;
 }
-.image-container {
-    padding:10px;
+#image-container {
+
     position:relative;
 
     display: flex;
@@ -85,6 +77,8 @@ Or I could have bootstrap container with a set width at each media query size
     height:100%;
     top:0;
     left:0;
+    
+	background-color:#10100f;
 }
 .message-container {
     display: flex;
@@ -99,25 +93,36 @@ Or I could have bootstrap container with a set width at each media query size
     background-color: white;
 }
 
-.stats-container {
+#stats-container {
     display:flex;
     flex-direction: row;
     padding: 0 20px;
+    min-height: 50px;
+    margin: 20px 0;
+    
+    color: #716966;
+    font-weight: 700;
+    font-family: Arial, sans-serif;
+
 }
-.strikes-container, .guessed-container, .wins-container {
+#strikes-container, #guessed-container, #wins-container {
     width:33.3%;
     display:flex;
     flex-direction:column;
     align-items: center;
     justify-content: space-between;
+    min-height: 70px;
+}
+#strikes--header, #guessed--header, #wins--header {
+    text-decoration: underline;
 }
 
-
-.solution-container {
+#solution-container {
     display:flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin: 10px 0;
 }
 
 
@@ -125,28 +130,20 @@ Or I could have bootstrap container with a set width at each media query size
     max-width: 100%;
     display: flex;
     flex-direction: row;
-    margin: 10px;
+    margin: 0 8px;
     align-content: center;
     justify-content: center;
-    font-size: 6vmin;
-    line-height: 1.45;
 }
 
 .wooden{
     font-family: 'News Cycle', sans-serif;
-    font-weight: 700;
+    font-weight: 900;
     text-transform: uppercase;
     text-shadow: rgba(white, 0.5) 1px 1px 0;
-    color: #333333;
-    background-color: #EBCC99;
-    /*background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/225363/Melamine-wood-001.png);*/
-    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/49914/veneer-birch-texture-fs8.png);
+    color:white;
     border: none;
     border-radius: 0.5vmin;
-    box-shadow: 
-        inset rgba(black, 0.2) -4px -4px 24px,
-        inset #CFB58B 0 -4px 0,
-        rgba(black, 0.15) 0 6px 6px -3px;
+    
 }
 
 .empty {
@@ -159,45 +156,15 @@ Or I could have bootstrap container with a set width at each media query size
         rgba(black, 0.15) 0 6px 6px -3px;
 }
 
-.faded {
-    background-color: bisque;
-    border: none;
-    border-radius: 0.5vmin;
-    box-shadow: 
-        inset rgba(black, 0.2) -4px -4px 24px,
-        inset #CFB58B 0 -4px 0,
-        rgba(black, 0.15) 0 6px 6px -3px;
-}
-
 .tile {
-    margin: 10px;
     display: flex;
     justify-content: center;
-    margin: 1vmin;
-    width: 10vmin;
-    height: 10vmin;
-}
-
-.tile--small {
-    width: 5vmin;
-    height: 5vmin;
+    margin: 0.25vmin;/*1vmin*/
+    width: 4vmin;
+    height: 4vmin;
     font-size: 3vmin;
-    line-height: 1.45;
+    line-height: 1.2;
 }
 
 
-/*
-tile has to be square so i need to set width/height
-will change with media queuries
-need to set appropriate font size with tile size
 
-*/
-@media screen and (max-width:900px){
-    .game-container {
-        flex-direction: column;
-        height:100%;
-    }
-    .words-container, .image-container {
-        width:100%;
-    }
-}

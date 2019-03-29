@@ -1,0 +1,41 @@
+#frame-container{
+    display: none; /* should end up as flex*/
+    height: 100%;
+    width:100%;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    --blur: 2px;
+}
+
+.frame{
+    display: inline-block;
+	vertical-align: middle;
+	margin: auto 200px;
+	padding: 30px;
+	border: 10px solid #efefef;
+	background-color: #eaeaea;
+	position: relative;
+	transition: .3s ease;
+    box-shadow: inset 0px 6px 3px 1px rgba(0,0,0,.3), 
+        2px 17px 4px 11px rgba(0,0,0,.2), 
+        20px 18px 70px -10px rgba(0,0,0,.5), 
+        -2px 20px 100px -10px rgba(255,255,255,.8);
+}
+.frame-inside{
+    box-shadow: 0 0 2px rgba(0,0,0,.1);
+}
+
+.message-frame {
+    display: block;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+.message-inside{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content: space-between;
+    text-align: center;
+}

@@ -24,16 +24,20 @@ class ScreenCapQuiz {
         } else if (this.isValidKey(keyPressed)){
 
             if(this.lettersGuessed.indexOf(keyPressed) === -1){
-                this.lettersGuessed.push(keyPressed);
+                this.lettersGuessed.push(keyPressed);  
             }
             if(!this.keyInWord(keyPressed, this.title)){
                 this.strikesRemaining -= 1;
+                this.playWrong();
+            } else {
+                this.playRight();
             }
             if(this.strikesRemaining === 0){
                 this.lose();
             }
             if(this.guessedAll(this.title, this.lettersGuessed)){
                 this.win();
+                this.playVictory();
             }
         }
         
@@ -68,6 +72,15 @@ class ScreenCapQuiz {
         console.log('lose');
         this.gameReady = true;
         this.messageHTML = "<div>You lost!</div><div> Answer was: "+this.title+"</div><div>Press Any Key to Continue</div>";
+    }
+    playWrong(){
+        document.getElementById('audio-wrong').play();
+    }
+    playRight(){
+        document.getElementById('audio-right').play();
+    }
+    playVictory(){
+        document.getElementById('audio-win').play();
     }
     win(){
         console.log('win');
@@ -121,7 +134,9 @@ class ScreenCapQuiz {
         if(this.messageHTML !== ''){
             document.getElementById('image-container').innerHTML = (
                 "<img class='screenshot-img' src='"+ this.image + "'>" +
-                "<div class='message-container' id='message-container'>"+ this.messageHTML + "</div>"
+                "<div class='message-container' id='message-container'><div class='frame message-frame'><div class='frame-inside message-inside'>"+ 
+                this.messageHTML + 
+                "</div></div></div>"
             )
         } else {
             document.getElementById('image-container').innerHTML = (
@@ -133,8 +148,8 @@ class ScreenCapQuiz {
         var incorrectLetters = '';
         for(var i=0; i<this.lettersGuessed.length; i++){
             if(!this.keyInWord(this.lettersGuessed[i], this.title)){
-                incorrectLetters += "<div class='faded tile tile--small'>" + this.lettersGuessed[i] + "</div>";
-            }
+                incorrectLetters += "<div class='tile '>" + this.lettersGuessed[i] + "</div>";
+            } //used to use faded class   tile--small
         }
         
         document.getElementById('guessedWords').innerHTML = incorrectLetters;
@@ -143,7 +158,7 @@ class ScreenCapQuiz {
     }
 }
 
-
+/*
 var sources = [
     { 
         image: 'https://img.buzzfeed.com/buzzfeed-static/static/2018-12/16/16/enhanced/buzzfeed-prod-web-06/enhanced-8749-1544995921-7.jpg?downsize=800:*&output-format=auto&output-quality=auto',
@@ -165,7 +180,7 @@ var sources = [
         image: 'https://img.buzzfeed.com/buzzfeed-static/static/2018-12/16/16/enhanced/buzzfeed-prod-web-06/enhanced-8487-1544995699-1.jpg?downsize=800:*&output-format=auto&output-quality=auto',
         title: 'Sleeping Beauty'
     }
-]
+]*/
 
 var gameElem = document.getElementById('game');
 
@@ -173,10 +188,12 @@ var game = new ScreenCapQuiz(sources, gameElem)
 
 document.onkeydown = function(evt){
     document.getElementById('startMessage').setAttribute("style", "display:none");
-    document.getElementById('game').setAttribute("style", "display:flex");
+    document.getElementById('frame-container').setAttribute("style", "display:flex"); 
     
     if(!game.finished){
         game.runGame(evt.key);
     }
     
 }
+
+console.log('loaded js')

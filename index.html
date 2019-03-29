@@ -8,53 +8,18 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     
     <link rel="stylesheet" type="text/css" href="assets/css/sign.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/frame.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
 </head>
 <body>
     
     <div id='game'>
         <div class="message-container" id="startMessage">
-            <div style="display:none;">
-                <header>        
-                    <div class="header-word">
-                        <div class="wooden tile--header">M</div>
-                        <div class="wooden tile--header">o</div>
-                        <div class="wooden tile--header">v</div>
-                        <div class="wooden tile--header">i</div>
-                        <div class="wooden tile--header">e</div>
-                        <div class="wooden tile--header">s</div>
-                    </div>
-                    <div class="header-word">
-                        <div class="wooden tile--header">S</div>
-                        <div class="wooden tile--header">c</div>
-                        <div class="wooden tile--header">r</div>
-                        <div class="wooden tile--header">e</div>
-                        <div class="wooden tile--header">e</div>
-                        <div class="wooden tile--header">n</div>
-                        <div class="wooden tile--header">s</div>
-                        <div class="wooden tile--header">h</div>
-                        <div class="wooden tile--header">o</div>
-                        <div class="wooden tile--header">t</div>
-                    </div>
-                    <div class="header-word">
-                        <div class="wooden tile--header">Q</div>
-                        <div class="wooden tile--header">u</div>
-                        <div class="wooden tile--header">i</div>
-                        <div class="wooden tile--header">z</div>
-                    </div>
-                </header>
-                Press Any Key to get started 
-            </div>
+            
             <div class="theater-sign">
                 <div class="sign-top">
-                    <div class="sign-lines">
-                        <div class="sign-line"></div>
-                        <div class="sign-line"></div>
-                    </div>
-                    <div class="sign-title">Shows</div>
-                    <div class="sign-lines">
-                        <div class="sign-line"></div>
-                        <div class="sign-line"></div>
-                    </div>
+                    <div class="sign-title">CINEMA</div>
                 </div>
                 <div class="grid-container">
                     <div class="grid">
@@ -101,28 +66,54 @@
                 </div>
             </div>
         </div>
-        <div class="game-container" id="game-container">
-                <div class="image-container" id="image-container"></div>
-                <div class="words-container" id="words-container">
-                    <div class="stats-container" id="stats-container">
-                        <div class="strikes-container" id="strikes-container">
-                            <div class="strikes--header" id="strikes--header">Guesses Remaining:</div>
-                            <div class="strikesNum" id="strikesNum"></div>
-                        </div>
-                        <div class="guessed-container" id="guessed-container">
-                            <div class="guessed--header" id="guessed--header"> Incorrect Guesses </div>
-                            <div class="tile-container" id="guessedWords"></div>
-                        </div>
-                        <div class="wins-container" id="wins-container">
-                            <div class="wins--header" id="wins--header">Wins:</div>
-                            <div class="winsNum" id="winsNum"></div>
+        <div id="frame-container">
+                
+            <div class="frame">
+                <div class="sign-title nowShowing">Now Showing</div>
+                <div class="frame-inside">
+                    
+                    <div id="game-container">
+                        <div id="image-container"></div>
+                        <div id="words-container">
+                            
+                            <div id="solution-container"></div>
+
+                            <div id="stats-container">
+                                <div id="strikes-container">
+                                    <div id="strikes--header">Guesses Remaining</div>
+                                    <div id="strikesNum"></div>
+                                </div>
+                                <div id="guessed-container">
+                                    <div id="guessed--header"> Incorrect Guesses </div>
+                                    <div class="tile-container" id="guessedWords"></div>
+                                </div>
+                                <div id="wins-container">
+                                    <div id="wins--header">Wins</div>
+                                    <div id="winsNum"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="solution-container" id="solution-container"></div>
+
+                    
                 </div>
             </div>
+        </div>
+        
+        
     </div>
     
-    <script src="assets/javascript/gameClass.js"/>
+    <audio id="audio-wrong" controls style="display:none">
+        <source src="assets/sound/error.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="audio-right" controls style="display:none">
+        <source src="assets/sound/tile_down.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="audio-win" controls style="display:none">
+        <source src="assets/sound/cash_register.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="assets/javascript/data.js"></script> <!-- wouldnt load on my desktop computer unless I put closing tag for some reason -->
+    <script src="assets/javascript/gameClass.js"></script>
 </body>
 </html>
