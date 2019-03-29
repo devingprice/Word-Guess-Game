@@ -39,7 +39,7 @@ header {
 
 #game{
     margin: 0 auto;
-    min-width: 734px;
+    min-width: 500px;
     max-width: 1024px;
     flex-grow:1;
     display: flex;
@@ -167,4 +167,100 @@ header {
 }
 
 
+.faded-out {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
+}
+/*
+.fade-in {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 2s linear;
+    -webkit-animation: slide 0.5s forwards;
+    -webkit-animation-delay: 2s;
+    animation: slide 0.5s forwards;
+    animation-delay: 2s;
+}
 
+@-webkit-keyframes slide {
+    100% { left: 0; }
+}
+
+@keyframes slide {
+    100% { left: 0; }
+
+}*/
+
+.fade-in {
+    -webkit-animation-duration: 2s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown;
+}
+@-webkit-keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(100px);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+ 
+
+.slide-sideways {
+    -webkit-animation-duration: 2s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: slide;
+    animation-name: slide;
+}
+@-webkit-keyframes slide {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(100px);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+    }
+}
+
+@keyframes slide {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+        -webkit-filter: blur(0px)
+    }
+    20% {
+        opacity: 0;
+        transform: translateX(-100px);
+        -webkit-filter: blur(5px)
+    }
+    21% {
+        opacity: 0;
+        transform: translateX(100px);
+        -webkit-filter: blur(5px)
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        -webkit-filter: blur(0px)
+    }
+}

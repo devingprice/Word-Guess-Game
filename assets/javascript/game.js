@@ -30,6 +30,43 @@ var audioPlayer = {
     }
 }
 
+var animationController = {
+    count : 0,
+    frameContainer: document.getElementById('frame-container'),
+    startMessage: document.getElementById('startMessage'),
+    handleAnimations: function(){
+        if( this.count === 0){
+            this.start();
+        } else if ( this.count === 1){
+            this.first();
+        } else if (this.count >1 ){
+            this.after();
+        }
+    },
+    start : function(){
+        this.startMessage.setAttribute("style", "display:none");
+        this.frameContainer.setAttribute("style", "display:flex"); 
+        this.frameContainer.classList.remove('faded-out');
+        this.frameContainer.classList.add("fade-in");
+        this.count++;
+    },
+    first : function(){
+        this.frameContainer.classList.remove('faded-in');
+        this.frameContainer.classList.add("slide-sideways");
+        this.count++;
+    },
+    after : function(){
+        this.frameContainer.className = "";
+        window.requestAnimationFrame(function(time) {
+            window.requestAnimationFrame(function(time) {
+                document.getElementById('frame-container').className = "slide-sideways";
+            });
+        });
+        this.count++;
+    }
+}
+
+
 var quizObject = {
     finished : false,
     gameReady : true,
@@ -42,23 +79,25 @@ var quizObject = {
     image : sources[0].image,//just initializing  this.data[this.index].image,
     messageHTML : '',
     runGame : function(keyPressed){
-        if(this.gameReady){ // stop game until keypress at start or in between rounds
+        if(this.gameReady){ // stop game until keypress at start 
             this.gameReady=false;
+            animationController.handleAnimations();
             console.log('start playing')
         } else if (isValidKey(keyPressed)){ //if key is letter or num
 
             if(this.lettersGuessed.indexOf(keyPressed) === -1){ // if you havent already typed this
+                console.log("new letter")
                 this.lettersGuessed.push(keyPressed);  
-                console.log(this.lettersGuessed)
-            } else { //if new letter
+
                 if(!keyInWord(keyPressed, this.title)){ //if not in title
-                    console.log("keypressed:",keyPressed, this.title)
-                    console.log(keyInWord(keyPressed, this.title))
                     this.strikesRemaining -= 1;
                     audioPlayer.wrong();
-                } else {
+                } else { // is in title
                     audioPlayer.right();
                 }
+
+            }  else {
+                console.log('old letter -> do nothing')
             }
             
             // win lose conditions
@@ -71,7 +110,8 @@ var quizObject = {
         }
         
         this.putResultsInPlaces(); //display
-        //next round
+
+        //next round state update | not dom
         if(this.gameReady){
             this.reset();
             this.nextWord();
@@ -161,14 +201,9 @@ var quizObject = {
 var game = quizObject; 
 
 document.onkeydown = function(evt){
-    //runs every click but just resets this value over and over
-    document.getElementById('startMessage').setAttribute("style", "display:none");
-    document.getElementById('frame-container').setAttribute("style", "display:flex"); 
-    
     if(!game.finished){
         game.runGame(evt.key);
-    }
-    
+    } 
 }
 
 console.log('loaded js')

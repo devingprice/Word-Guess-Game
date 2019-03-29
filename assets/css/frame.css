@@ -11,7 +11,7 @@
 .frame{
     display: inline-block;
 	vertical-align: middle;
-	margin: auto 200px;
+	margin: auto 100px;
 	padding: 30px;
 	border: 10px solid #efefef;
 	background-color: #eaeaea;
@@ -38,4 +38,11 @@
     flex-direction:column;
     justify-content: space-between;
     text-align: center;
+}
+
+
+@media screen and (max-width: 600px){
+    .frame {
+        margin: 0;
+    }
 }
