@@ -62,9 +62,8 @@ header {
     width:100%;
 }
 #image-container {
-
+    width:100%;
     position:relative;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -172,29 +171,10 @@ header {
     opacity: 0;
     transition: visibility 0s 2s, opacity 2s linear;
 }
-/*
-.fade-in {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 2s linear;
-    -webkit-animation: slide 0.5s forwards;
-    -webkit-animation-delay: 2s;
-    animation: slide 0.5s forwards;
-    animation-delay: 2s;
-}
-
-@-webkit-keyframes slide {
-    100% { left: 0; }
-}
-
-@keyframes slide {
-    100% { left: 0; }
-
-}*/
 
 .fade-in {
-    -webkit-animation-duration: 2s;
-    animation-duration: 1s;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
     -webkit-animation-name: fadeInDown;
@@ -203,11 +183,13 @@ header {
 @-webkit-keyframes fadeInDown {
     0% {
         opacity: 0;
-        -webkit-transform: translateY(100px);
+        transform: translateY(100px);
+        -webkit-filter: blur(5px)
     }
     100% {
         opacity: 1;
-        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        -webkit-filter: blur(0px)
     }
 }
 
@@ -215,17 +197,19 @@ header {
     0% {
         opacity: 0;
         transform: translateY(100px);
+        -webkit-filter: blur(5px)
     }
     100% {
         opacity: 1;
         transform: translateY(0);
+        -webkit-filter: blur(0px)
     }
 }
  
 
 .slide-sideways {
-    -webkit-animation-duration: 2s;
-    animation-duration: 1s;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
     -webkit-animation-name: slide;
@@ -233,12 +217,24 @@ header {
 }
 @-webkit-keyframes slide {
     0% {
+        opacity: 1;
+        transform: translateY(0);
+        -webkit-filter: blur(0px)
+    }
+    20% {
         opacity: 0;
-        -webkit-transform: translateY(100px);
+        transform: translateX(-100px);
+        -webkit-filter: blur(5px)
+    }
+    21% {
+        opacity: 0;
+        transform: translateX(100px);
+        -webkit-filter: blur(5px)
     }
     100% {
         opacity: 1;
-        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        -webkit-filter: blur(0px)
     }
 }
 

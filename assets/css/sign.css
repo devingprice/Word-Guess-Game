@@ -26,7 +26,6 @@
 	font-size: 60px;
 	letter-spacing: 10px;
 	margin: 6px auto;
-	padding-left: 12px;
 	text-align: center;
 	text-shadow: 0 0 10px #fff, 0 0 20px #FFC600, 0 0 35px #FFC600, 0 0 40px #FFC600;
 	text-transform: uppercase;
@@ -54,7 +53,6 @@
 	width: 700px;
 }
 .grid::after {
-	box-shadow: 0 0 30px 10px rgba(0,0,0,.3) inset;
 	content: "";
 	position: absolute;
 	top: 0;
@@ -179,7 +177,10 @@
 .nowShowing{
 	position: absolute;
 	bottom: 100%;
-	padding-left:30px;
+
+	width: calc(100% - 60px); /* https://stackoverflow.com/questions/899107/how-can-i-do-width-100-100px-in-css/22573475 */
+	text-align: center;
+	padding-left:0;
 }
 @media screen and (max-width:980px){
 	.nowShowing{
