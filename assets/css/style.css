@@ -1,40 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=News+Cycle:700');
 
 * { box-sizing: border-box; }
+
 html,body {
     padding:0;
     margin:0;
     height:100%;
 }
+
 body {
     display:flex;
     flex-direction:column;
-
     background-color:#10100f;
-}
-header {
-    display:flex;
-    flex-direction: row;
-    flex-wrap:wrap;
-    justify-content: center;
-    align-items:center;
-    width:100%;
-    background-color:#e4c899;
-}
-.header-word {
-    display:flex;
-    flex-direction: row;
-    margin: 1vmin;
-}
-.tile--header {
-    margin: .5vmin;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    font-size: 3.5vmin;
-    line-height: 1.45;
-    width: 6vmin;
-    height: 6vmin;
 }
 
 #game{
@@ -47,6 +24,7 @@ header {
     align-items: center;
     position: relative;
 }
+
 #game-container {
     display: flex;
     flex-direction: column;
@@ -61,6 +39,7 @@ header {
 #words-container {
     width:100%;
 }
+
 #image-container {
     width:100%;
     position:relative;
@@ -68,27 +47,27 @@ header {
     justify-content: center;
     align-items: center;
 }
+
 .screenshot-img {
     width:100%;
 }
+
 #startMessage {
     width:100%;
     height:100%;
     top:0;
     left:0;
-    
 	background-color:#10100f;
 }
+
 .message-container {
     display: flex;
     flex-direction:column;
     align-items:center;
     justify-content: center;
-
     position: absolute;
     width:70%;
     height:70%;
-
     background-color: white;
 }
 
@@ -98,12 +77,11 @@ header {
     padding: 0 20px;
     min-height: 50px;
     margin: 20px 0;
-    
     color: #716966;
     font-weight: 700;
     font-family: Arial, sans-serif;
-
 }
+
 #strikes-container, #guessed-container, #wins-container {
     width:33.3%;
     display:flex;
@@ -111,6 +89,7 @@ header {
     align-items: center;
     min-height: 70px;
 }
+
 #strikes--header, #guessed--header, #wins--header {
     text-decoration: underline;
     margin-bottom: 20px;
@@ -124,6 +103,8 @@ header {
     margin: 10px 0;
 }
 
+
+/* TILE for entered words */
 
 .tile-container {
     max-width: 100%;
@@ -176,6 +157,79 @@ header {
 }
 
 
+
+/* POSTER FRAME for word guess rounds */
+
+#frame-container{
+    display: none; /* should end up as flex after animationController */
+    height: 100%;
+    width:100%;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    --blur: 2px;
+}
+
+.frame{
+    display: inline-block;
+	vertical-align: middle;
+	margin: auto 100px;
+	padding: 30px;
+	border: 10px solid black;
+	background-color: #eaeaea;
+	position: relative;
+	transition: .3s ease;
+    box-shadow: inset 0px 6px 3px 1px rgba(0,0,0,.3), 
+        2px 17px 4px 11px rgba(0,0,0,.2), 
+        20px 18px 70px -10px rgba(0,0,0,.5), 
+        -2px 20px 100px -10px rgba(255,255,255,.8);
+}
+.frame-inside{
+    box-shadow: 0 0 2px rgba(0,0,0,.1);
+}
+
+.message-frame {
+    display: block;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+.message-inside{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content: space-around;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px){
+    .frame {
+        margin: 0;
+    }
+}
+
+.nowShowing{
+	position: absolute;
+	bottom: 100%;
+
+	width: calc(100% - 60px); /* https://stackoverflow.com/questions/899107/how-can-i-do-width-100-100px-in-css/22573475 */
+	text-align: center;
+	padding-left:0;
+}
+
+@media screen and (max-width:980px){
+	.nowShowing{
+		padding-left:0;
+	}
+}
+
+
+
+/* ANIMATIONS for transitions */
+/* controlled by animation controller object by adding and removing classes with a delay.
+    found the slide in and then a motion blur codepen project and I copied how they worked.
+    title sign still doesnt work right now */
+
 .faded-out {
     visibility: hidden;
     opacity: 0;
@@ -190,6 +244,7 @@ header {
     -webkit-animation-name: fadeInDown;
     animation-name: fadeInDown;
 }
+
 @-webkit-keyframes fadeInDown {
     0% {
         opacity: 0;
@@ -225,6 +280,7 @@ header {
     -webkit-animation-name: slide;
     animation-name: slide;
 }
+
 @-webkit-keyframes slide {
     0% {
         opacity: 1;

@@ -9,11 +9,12 @@
 /* Says free with attribution from https://www.behance.net/gallery/55332529/NEONEON-FREE-FONT */
 
 
-/* Theater css was found https://codepen.io/tiffwong/pen/ErGgxq*/
+
+
+/* Theater css was found https://codepen.io/tiffwong/pen/ErGgxq and then further modified to fit my needs */
+
 .theater-sign {
 	height: 300px;
-	/*margin: 175px auto;*/
-	
 }
 
 .sign-top {
@@ -172,19 +173,5 @@
 	}
 	to {
 		opacity: 1;
-	}
-}
-
-.nowShowing{
-	position: absolute;
-	bottom: 100%;
-
-	width: calc(100% - 60px); /* https://stackoverflow.com/questions/899107/how-can-i-do-width-100-100px-in-css/22573475 */
-	text-align: center;
-	padding-left:0;
-}
-@media screen and (max-width:980px){
-	.nowShowing{
-		padding-left:0;
 	}
 }
