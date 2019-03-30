@@ -158,7 +158,7 @@ var quizObject = {
             for(var j=0; j<individualWords[i].length; j++){
                 
                 if(keyInWord(individualWords[i][j], this.lettersGuessed.join(""))){
-                    wordContainer += "<div class='wooden tile'>" + individualWords[i][j] + "</div>";
+                    wordContainer += "<div class='entered tile'>" + individualWords[i][j] + "</div>";
                 } else {
                     wordContainer += "<div class='empty tile'>"  + "</div>";
                 }
@@ -187,7 +187,7 @@ var quizObject = {
         var incorrectLetters = '';
         for(var i=0; i<this.lettersGuessed.length; i++){
             if(!keyInWord(this.lettersGuessed[i], this.title)){
-                incorrectLetters += "<div class='tile '>" + this.lettersGuessed[i] + "</div>";
+                incorrectLetters += "<div class='tile--small '>" + this.lettersGuessed[i] + "</div>";
             }
         }
         

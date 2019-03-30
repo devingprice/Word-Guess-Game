@@ -109,11 +109,11 @@ header {
     display:flex;
     flex-direction:column;
     align-items: center;
-    justify-content: space-between;
     min-height: 70px;
 }
 #strikes--header, #guessed--header, #wins--header {
     text-decoration: underline;
+    margin-bottom: 20px;
 }
 
 #solution-container {
@@ -134,7 +134,7 @@ header {
     justify-content: center;
 }
 
-.wooden{
+.entered {
     font-family: 'News Cycle', sans-serif;
     font-weight: 900;
     text-transform: uppercase;
@@ -163,6 +163,16 @@ header {
     height: 4vmin;
     font-size: 3vmin;
     line-height: 1.2;
+}
+
+.tile--small {
+    display: flex;
+    justify-content: center;
+    margin: 0.25vmin;
+    width: 3vmin;
+    height: 3vmin;
+    font-size: 2vmin;
+    line-height: 1.5;
 }
 
 
