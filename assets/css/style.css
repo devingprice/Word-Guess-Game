@@ -9,9 +9,24 @@ html,body {
 }
 
 body {
+    position: relative;
+    z-index: 0;
     display:flex;
     flex-direction:column;
-    background-color:#10100f;
+    /* background-color:#10100f; */
+    background-color: #6b3d43;
+    background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23b6aac9' fill-opacity='0.4'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    
+}
+body:after {
+    content: '';
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index: 1;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,.3) 0%, rgba(0,0,0,1) 100%)
 }
 
 #game{
@@ -23,6 +38,7 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
+    z-index: 2;
 }
 
 #game-container {
@@ -57,7 +73,7 @@ body {
     height:100%;
     top:0;
     left:0;
-	background-color:#10100f;
+	/* background-color:#10100f; */
 }
 
 .message-container {
@@ -68,7 +84,7 @@ body {
     position: absolute;
     width:70%;
     height:70%;
-    background-color: white;
+    /* background-color: white; */
 }
 
 #stats-container {
