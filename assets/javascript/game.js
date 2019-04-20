@@ -1,3 +1,13 @@
+document.body.addEventListener('click', clickOrTouch, true)
+document.body.addEventListener('touch', clickOrTouch, true)
+document.body.addEventListener('click touch', clickOrTouch, true)
+
+function clickOrTouch(){
+    console.log('clicked screen');
+    document.getElementById('hidden-text').focus();
+    console.log(document.getElementById('hidden-text').value);
+
+}
 function isValidKey(key){
     return /^[a-zA-Z0-9]$/i.test(key); //from https://forums.asp.net/t/1289763.aspx?Regular+Expression+Validator+Letters+and+Numbers+only+
 }
@@ -201,9 +211,20 @@ var quizObject = {
 var game = quizObject; 
 
 document.onkeydown = function(evt){
+    //document.getElementById('tempAddTo').textContent += evt.key;
+    var key = evt.key;
+    // if( key === 'unidentified' || evt.keyCode === 229 ){
+    //     key =
+    // }
     if(!game.finished){
-        game.runGame(evt.key);
+        game.runGame( key);
     } 
 }
-
+document.getElementById('hidden-text').addEventListener('input', function(e){
+    var key = e.srcElement.value[e.srcElement.value.length-1];
+    // document.getElementById('tempAddTo').textContent += key;
+    if(!game.finished){
+        game.runGame( key);
+    } 
+})
 console.log('loaded js')

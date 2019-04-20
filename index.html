@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Word Guess Game</title>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    
+
     <link rel="stylesheet" type="text/css" href="assets/css/sign.css">
 
     <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
 </head>
+
 <body>
-    
+
     <div id='game'>
         <div class="message-container" id="startMessage">
-            
+
             <div class="theater-sign">
                 <div class="sign-top">
                     <div class="sign-title">CINEMA</div>
@@ -60,22 +62,25 @@
                     </div>
                 </div>
                 <div class="show-details">
-                    <div class="sign-grid-letters">Screenshot Quiz</div>  
-                    <div class="sign-grid-letters">Guess the Movie Title</div> 
+                    <div class="sign-grid-letters">Screenshot Quiz</div>
+                    <div class="sign-grid-letters">Guess the Movie Title</div>
                     <div style="color: #b60d11;" class="sign-grid-letters">Press Any Key to Continue</span>
+                    </div>
                 </div>
             </div>
         </div>
+
+
         <div id="frame-container" class="faded-out">
-                
+
             <div class="frame">
-                <div class="sign-title nowShowing">Now Showing</div>
+                <div id="tempAddTo" class="sign-title nowShowing">Now Showing</div>
                 <div class="frame-inside">
-                    
+
                     <div id="game-container">
                         <div id="image-container"></div>
                         <div id="words-container">
-                            
+
                             <div id="solution-container"></div>
 
                             <div id="stats-container">
@@ -95,25 +100,24 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
             </div>
         </div>
-        
-        
-    </div>
-    
-    <audio id="audio-wrong" controls style="display:none">
-        <source src="assets/sound/error.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="audio-right" controls style="display:none">
-        <source src="assets/sound/tile_down.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="audio-win" controls style="display:none">
-        <source src="assets/sound/cash_register.mp3" type="audio/mpeg">
-    </audio>
+        <textarea id="hidden-text"></textarea>
 
-    <script src="assets/javascript/data.js"></script> 
-    <script src="assets/javascript/game.js"></script>
+        <audio id="audio-wrong" controls style="display:none">
+            <source src="assets/sound/error.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audio-right" controls style="display:none">
+            <source src="assets/sound/tile_down.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audio-win" controls style="display:none">
+            <source src="assets/sound/cash_register.mp3" type="audio/mpeg">
+        </audio>
+
+        <script src="assets/javascript/data.js"></script>
+        <script src="assets/javascript/game.js"></script>
 </body>
+
 </html>
